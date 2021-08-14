@@ -10,15 +10,11 @@ const fetchByTrending = async () => {
     .then(res => res.data.results);
 };
 
-// async function fetchByTrending() {
-//   const response = await fetch(`${URL}trending/all/day?api_key=${KEY}`);
-//   return response.json();
-// }
-
-async function fetchByIdMovies(movieId) {
-  const response = await fetch(`${URL}movie/${movieId}?api_key=${KEY}`);
-  return response.json();
-}
+const fetchByIdMovies = async movieId => {
+  return await axios
+    .get(`${URL}movie/${movieId}?api_key=${KEY}`)
+    .then(res => res.data);
+};
 
 async function fetchByIdMoviesActors(movieId) {
   const response = await fetch(`${URL}movie/${movieId}/credits?api_key=${KEY}`);

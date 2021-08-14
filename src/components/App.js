@@ -9,31 +9,28 @@ import Review from '../views/Review';
 import Header from './Header';
 //* Views
 import HomeView from 'views/HomeView';
+import NotFoundView from 'views/NotFoundView/NotFoundView';
 
 function App() {
   return (
     <Container>
       <Header />
       <Switch>
-        <Route path="/" exact>
+        <Route exact path="/">
           <HomeView />
         </Route>
 
-        <Route path="/movies">
+        <Route exact path="/movies">
           <MoviesPageView />
         </Route>
-        {/* 
-        <Route path="/">
+
+        <Route path="/:movieId">
           <MovieDetailsPage />
         </Route>
 
         <Route path="/">
-          <Cast />
+          <NotFoundView />
         </Route>
-
-        <Route path="/">
-          <Review />
-        </Route> */}
       </Switch>
     </Container>
   );

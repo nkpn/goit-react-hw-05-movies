@@ -25,6 +25,7 @@ const Header = () => {
             Movies
           </NavLink>
         </nav>
+        <hr></hr>
       </header>
     </>
   );
