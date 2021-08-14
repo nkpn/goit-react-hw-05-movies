@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
 
-export default function MoviesPage() {
+export default function MoviesPageView() {
   return;
 }
