@@ -1,28 +1,28 @@
-import react from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import { Route, Switch } from 'react-router';
 //* Components
 import Container from './Container';
-import HomePage from './HomePage';
-import MoviesPage from '../views/MoviesPageView';
-import MovieDetailsPage from './MovieDetailPage';
-import Cast from './Cast';
-import Review from './Review';
+import MoviesPageView from '../views/MoviesPageView';
+import MovieDetailsPage from '../views/MovieDetailPage';
+import Cast from '../views/CastView';
+import Review from '../views/Review';
+import Header from './Header';
 //* Views
 import HomeView from 'views/HomeView';
 
 function App() {
   return (
     <Container>
+      <Header />
       <Switch>
         <Route path="/" exact>
           <HomeView />
         </Route>
 
-        {/* <Route path="/">
-          <MoviesPage />
+        <Route path="/movies">
+          <MoviesPageView />
         </Route>
-
+        {/* 
         <Route path="/">
           <MovieDetailsPage />
         </Route>

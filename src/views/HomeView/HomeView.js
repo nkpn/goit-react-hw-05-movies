@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { fetchByTrending } from 'services/movieAPI';
+import style from './HomeView.module.css';
 
 export default function HomeView() {
   const [films, setFilms] = useState(null);
@@ -25,7 +27,13 @@ export default function HomeView() {
       {films && (
         <ul>
           {films.map(film => {
-            return <li key={film.id}>{film.name ? film.name : film.title}</li>;
+            return (
+              <li className={style.Item} key={film.id}>
+                <Link className={style.Link} to={`/${film.id}`}>
+                  {film.name ? film.name : film.title}
+                </Link>
+              </li>
+            );
           })}
         </ul>
       )}

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
 
-export default function Cast() {
+export default function CastView() {
   return;
 }
