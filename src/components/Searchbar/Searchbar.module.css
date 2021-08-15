@@ -1,0 +1,9 @@
+.Form {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+}
+
+.margin {
+  margin-left: 20px;
+}

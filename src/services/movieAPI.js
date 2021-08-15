@@ -17,22 +17,19 @@ const fetchByIdMovies = async movieId => {
 
 async function fetchByIdMoviesActors(movieId) {
   const response = await fetch(`${URL}movie/${movieId}/credits?api_key=${KEY}`);
-  return response.json();
 }
 
 async function fetchByIdMoviesReviews(movieId) {
   const response = await fetch(
     `${URL}movie/${movieId}/reviews?api_key=${KEY}&page=1`,
   );
-  return response.json();
 }
 
-async function fetchOnSearch(search) {
-  const response = await fetch(
+const fetchOnSearch = async search => {
+  return await axios.get(
     `${URL}search/movie?api_key=${KEY}&page=1&query=${search}`,
   );
-  return response.json();
-}
+};
 
 export {
   fetchByTrending,
