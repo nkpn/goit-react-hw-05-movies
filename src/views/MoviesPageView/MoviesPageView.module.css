@@ -1,3 +1,14 @@
 .margin {
   margin-bottom: 10px;
 }
+
+.Item {
+  font-size: 18px;
+  font-weight: 500;
+  padding: 3px;
+}
+
+.Link {
+  text-decoration: none;
+  color: black;
+}

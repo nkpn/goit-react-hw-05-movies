@@ -26,7 +26,7 @@ export default function MoviesPageView() {
       setLoading(true);
       try {
         const resultData = await fetchOnSearch(searchQuery);
-        setMovies(data => [...data, ...resultData.results]);
+        setMovies(prevState => [...prevState, ...resultData.data.results]);
         setLoading(false);
       } catch (error) {
         console.log(error.resultData);
@@ -34,14 +34,12 @@ export default function MoviesPageView() {
       }
     })();
     console.log(movies);
-  }, [movies, searchQuery]);
+  }, [searchQuery]);
 
   const handleSubmit = event => {
-    // if (event.target.searchFilm.value.trim() === '') {
-    //   return;
-    // }
     setMovies([]);
-    // setSearchQuery(event.target.searchFilm.value);
+    setSearchQuery(event);
+    console.log(event);
     history.push({ ...location, search: `by=${event}` });
   };
 
@@ -65,8 +63,9 @@ export default function MoviesPageView() {
         <ul>
           {movies.map(movie => {
             return (
-              <li key={movie.id}>
+              <li key={movie.id} className={style.Item}>
                 <Link
+                  className={style.Link}
                   to={{
                     pathname: `/${movie.id}`,
                     state: { from: location, label: 'Back to the list' },

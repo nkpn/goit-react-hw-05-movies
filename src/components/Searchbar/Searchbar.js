@@ -7,11 +7,18 @@ function Searchbar({ onSubmit }) {
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearchQueryChange = event => {
+    if (event.target.value === '') {
+      return;
+    }
     setSearchQuery(event.target.value);
   };
 
   const handleSubmit = event => {
     event.preventDefault();
+    if (event.target.value === '') {
+      return;
+    }
+
     onSubmit(searchQuery);
   };
 
@@ -27,7 +34,9 @@ function Searchbar({ onSubmit }) {
           />
         </div>
         <div className={style.margin}>
-          <Button primary>Primary</Button>
+          <Button primary type="submit">
+            Find
+          </Button>
         </div>
       </form>
     </>
