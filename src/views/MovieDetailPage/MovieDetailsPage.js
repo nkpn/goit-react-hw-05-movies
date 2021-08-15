@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useRouteMatch, Route, NavLink } from 'react-router';
+import { useRouteMatch, Route, NavLink, useParams, Switch } from 'react-router';
 import { fetchByIdMovies } from 'services/movieAPI';
 import CastView from 'views/CastView';
 import Review from 'views/Review';
@@ -11,15 +11,32 @@ const MovieDetailsPage = () => {
   const { match, url, path } = useRouteMatch();
   const { movieId } = useParams();
 
+  // useEffect(() => {
+  //   fetchByIdMovies(movieId).then(setMovie);
+  // }, [movieId]);
+
   useEffect(() => {
-    fetchByIdMovies(movieId).then(setMovie);
+    fetchMovieById(movieId);
   }, [movieId]);
+
+  const fetchMovieById = async () => {
+    setLoading(true);
+    try {
+      const resultData = await fetchByIdMovies(movieId);
+      setMovie(resultData.data);
+      setLoading(false);
+      console.log(movie);
+    } catch (error) {
+      console.log(error.resultData);
+      setLoading(false);
+    }
+  };
 
   return (
     <>
       <div className={style.InfoContainer}>
         <div>
-          <img
+          {/* <img
             src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
             alt="Movie for you"
           />
@@ -27,7 +44,7 @@ const MovieDetailsPage = () => {
             src={`https://image.tmdb.org/t/p/w500//AoevYJSVtg15hntg8SYwWm2k3hP.jpg`}
             alt="Movie for you"
           /> */}
-        </div>
+          {/* </div>
         <div>
           <h2 className={style.Title}>{movie.original_title}</h2>
           <p className={style.Text}>User score : {movie.vote_average * 10}%</p>
@@ -38,7 +55,7 @@ const MovieDetailsPage = () => {
             {movie.genres.map(genre => (
               <li key={genre.id}>{genre.name}</li>
             ))}
-          </ul>
+          </ul>  */}
         </div>
       </div>
 

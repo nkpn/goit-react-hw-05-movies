@@ -11,9 +11,8 @@ const fetchByTrending = async () => {
 };
 
 const fetchByIdMovies = async movieId => {
-  return await axios
-    .get(`${URL}movie/${movieId}?api_key=${KEY}`)
-    .then(res => res.data);
+  return await axios.get(`${URL}movie/${movieId}?api_key=${KEY}`);
+  // .then(res => res.data);
 };
 
 async function fetchByIdMoviesActors(movieId) {
