@@ -1,40 +1,42 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useRouteMatch, NavLink } from 'react-router';
 import {
-  useHistory,
-  useLocation,
-  useParams,
-  useRouteMatch,
   Route,
   Switch,
-  NavLink,
+  useParams,
+  useHistory,
+  useLocation,
 } from 'react-router-dom';
-import style from './MovieDetailsPage.module.css';
-import Review from 'views/Review';
-import CastView from 'views/CastView';
 import { fetchByIdMovies } from 'services/movieAPI';
+import CastView from 'views/CastView';
+import Review from 'views/Review';
+import style from './MovieDetailsPage.module.css';
+import { Button } from 'semantic-ui-react';
 
 const MovieDetailsPage = () => {
   const [loading, setLoading] = useState(false);
   const [movie, setMovie] = useState(null);
-  const match = useRouteMatch();
+  const { match, url, path } = useRouteMatch();
   const { movieId } = useParams();
   const history = useHistory();
   const location = useLocation();
 
   useEffect(() => {
-    const fetch = async () => {
-      setLoading(true);
-      try {
-        const response = await fetchByIdMovies(movieId);
-        setLoading(false);
-        setMovie(response.data);
-      } catch (error) {
-        console.log(error.response);
-        setLoading(false);
-      }
-    };
-    fetch();
+    fetchByIdMovies(movieId);
   }, [movieId]);
+
+  // const fetchMovieById = async movieId => {
+  //   setLoading(true);
+  //   try {
+  //     const resultData = await fetchByIdMovies(movieId);
+  //     setMovie(resultData.data);
+  //     setLoading(false);
+  //     console.log(movie);
+  //   } catch (error) {
+  //     console.log(error.resultData);
+  //     setLoading(false);
+  //   }
+  // };
 
   const onBack = event => {
     history.push(location?.state?.from ?? '/');
@@ -47,7 +49,7 @@ const MovieDetailsPage = () => {
         Back
       </button>
       <div className={style.InfoContainer}>
-        <div>
+        {/* <div>
           <img
             src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
             alt="Movie for you"
@@ -64,7 +66,7 @@ const MovieDetailsPage = () => {
               <li key={genre.id}>{genre.name}</li>
             ))}
           </ul>
-        </div>
+        </div> */}
       </div>
 
       <Switch>
@@ -79,4 +81,5 @@ const MovieDetailsPage = () => {
     </>
   );
 };
+
 export default MovieDetailsPage;
