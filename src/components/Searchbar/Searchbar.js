@@ -25,7 +25,7 @@ function Searchbar({ onSubmit }) {
   return (
     <>
       <form onSubmit={handleSubmit} className={style.Form}>
-        <div class="ui input">
+        <div className="ui input">
           <Input
             value={searchQuery}
             type="text"

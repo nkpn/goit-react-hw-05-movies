@@ -20,7 +20,6 @@ export default function MoviesPageView() {
     if (searchQuery.trim() === '') {
       return;
     }
-    console.log(searchQuery);
 
     (async () => {
       setLoading(true);
@@ -33,13 +32,11 @@ export default function MoviesPageView() {
         setLoading(false);
       }
     })();
-    console.log(movies);
   }, [searchQuery]);
 
   const handleSubmit = event => {
     setMovies([]);
     setSearchQuery(event);
-    console.log(event);
     history.push({ ...location, search: `by=${event}` });
   };
 
@@ -67,7 +64,7 @@ export default function MoviesPageView() {
                 <Link
                   className={style.Link}
                   to={{
-                    pathname: `/${movie.id}`,
+                    pathname: `${match.url}/${movie.id}`,
                     state: { from: location, label: 'Back to the list' },
                   }}
                 >

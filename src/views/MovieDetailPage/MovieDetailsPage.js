@@ -11,9 +11,10 @@ import {
 import style from './MovieDetailsPage.module.css';
 import Review from 'views/Review';
 import CastView from 'views/CastView';
+import CustomLoader from 'components/SpinnerLoader/SpinnerLoader';
 import { fetchByIdMovies } from 'services/movieAPI';
 
-const MovieDetailsPage = () => {
+const MovieDetailsPage = onClick => {
   const [loading, setLoading] = useState(false);
   const [movie, setMovie] = useState(null);
   const match = useRouteMatch();
@@ -42,31 +43,34 @@ const MovieDetailsPage = () => {
 
   return (
     <>
-      <h1>Id: {movieId}</h1>
       <button class="ui button" onClick={onBack}>
         Back
       </button>
-      <div className={style.InfoContainer}>
-        <div>
-          <img
-            src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-            alt="Movie for you"
-          />
+      {loading && <CustomLoader />}
+      {movie && (
+        <div className={style.InfoContainer}>
+          <div>
+            <img
+              src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+              alt="Movie for you"
+            />
+          </div>
+          <div>
+            <h2 className={style.Title}>{movie.original_title}</h2>
+            <p className={style.Text}>
+              User score : {movie.vote_average * 10}%
+            </p>
+            <h3>Overview:</h3>
+            <p className={style.Text}>{movie.overview}</p>
+            <h3>Genres:</h3>
+            <ul className={style.Text}>
+              {movie.genres.map(genre => (
+                <li key={genre.id}>{genre.name}</li>
+              ))}
+            </ul>
+          </div>
         </div>
-        <div>
-          <h2 className={style.Title}>{movie.original_title}</h2>
-          <p className={style.Text}>User score : {movie.vote_average * 10}%</p>
-          <h3>Overview:</h3>
-          <p className={style.Text}>{movie.overview}</p>
-          <h3>Genres:</h3>
-          <ul className={style.Text}>
-            {movie.genres.map(genre => (
-              <li key={genre.id}>{genre.name}</li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
+      )}
       <Switch>
         <Route path="/movies/:movieId/cast">
           <CastView />

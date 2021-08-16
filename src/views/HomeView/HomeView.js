@@ -35,10 +35,7 @@ export default function HomeView() {
           {movies.map(movie => {
             return (
               <li className={style.Item} key={movie.id}>
-                <Link
-                  className={style.Link}
-                  to={`${match.url}movies/${movie.id}`}
-                >
+                <Link className={style.Link} to={`movies/${movie.id}`}>
                   {movie.name ? movie.name : movie.title}
                 </Link>
               </li>
