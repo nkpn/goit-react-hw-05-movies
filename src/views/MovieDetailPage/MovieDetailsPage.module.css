@@ -1,7 +1,6 @@
 .InfoContainer {
   display: grid;
   grid-template-columns: 1.7fr 1.3fr;
-  grid-template-rows: 0.5fr 0.5fr;
   gap: 0px 0px;
   grid-template-areas: '. .';
 }
@@ -12,4 +11,18 @@
 
 .Text {
   font-size: 16px;
+}
+
+.link {
+  display: inline-block;
+  text-decoration: none;
+  padding: 10px 10px 10px 0;
+  font-weight: 500;
+  color: #2a363b;
+  font-size: 18px;
+}
+
+.activeLink {
+  composes: link;
+  color: #2196f3;
 }

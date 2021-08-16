@@ -18,7 +18,7 @@ const MovieDetailsPage = onClick => {
   const [loading, setLoading] = useState(false);
   const [movie, setMovie] = useState(null);
   const match = useRouteMatch();
-  const { movieId } = useParams();
+  const { movieId, url, path } = useParams();
   const history = useHistory();
   const location = useLocation();
 
@@ -68,17 +68,32 @@ const MovieDetailsPage = onClick => {
                 <li key={genre.id}>{genre.name}</li>
               ))}
             </ul>
+            <nav className={style.Navigation}>
+              <NavLink
+                // to={`${match.path}/cast`}
+                //! Тут google url/path to=`${url}/cast`
+                className={style.link}
+                activeClassName={style.activeLink}
+              >
+                Cast
+              </NavLink>
+
+              <NavLink
+                // to={`${match.path}/review`}
+                className={style.link}
+                activeClassName={style.activeLink}
+              >
+                Review
+              </NavLink>
+            </nav>
           </div>
         </div>
       )}
-      <Switch>
-        <Route path="/movies/:movieId/cast">
-          <CastView />
-        </Route>
 
-        <Route path="/movies/:movieId/reviews">
-          <Review />
-        </Route>
+      <Switch>
+        <Route path={`${match.path}/cast`}>{movie && <CastView />}</Route>
+
+        <Route path={`${match.path}/reviews`}>{movie && <Review />}</Route>
       </Switch>
     </>
   );
