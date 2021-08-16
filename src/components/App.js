@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 //* Components
 import Container from './Container';
 import 'semantic-ui-css/semantic.min.css';

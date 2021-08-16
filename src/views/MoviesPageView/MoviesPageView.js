@@ -4,7 +4,6 @@ import CustomLoader from 'components/SpinnerLoader';
 import React, { useEffect, useState } from 'react';
 import { useRouteMatch } from 'react-router';
 import { useLocation, useHistory, Link } from 'react-router-dom';
-import { Input } from 'semantic-ui-react';
 import { fetchOnSearch } from 'services/movieAPI';
 import style from './MoviesPageView.module.css';
 
@@ -15,6 +14,7 @@ export default function MoviesPageView() {
   const [loading, setLoading] = useState(false);
   const location = useLocation();
   const history = useHistory();
+  const parsedMovies = JSON.parse(localStorage.getItem('movies'));
 
   useEffect(() => {
     if (searchQuery.trim() === '') {
@@ -33,6 +33,18 @@ export default function MoviesPageView() {
       }
     })();
   }, [searchQuery]);
+
+  useEffect(() => {
+    if (movies.length) {
+      localStorage.setItem('movies', JSON.stringify(movies));
+    }
+  }, [movies]);
+
+  useEffect(() => {
+    if (parsedMovies?.length >= 1) {
+      setMovies(parsedMovies);
+    }
+  }, []);
 
   const handleSubmit = event => {
     setMovies([]);
