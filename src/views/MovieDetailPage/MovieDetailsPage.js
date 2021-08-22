@@ -9,16 +9,21 @@ import {
   NavLink,
 } from 'react-router-dom';
 import style from './MovieDetailsPage.module.css';
-import Review from 'views/Review';
-import CastView from 'views/CastView';
 import CustomLoader from 'components/SpinnerLoader/SpinnerLoader';
 import { fetchByIdMovies } from 'services/movieAPI';
+
+const Review = lazy(() =>
+  import('views/Review' /* webpackChunkName: Reviews */),
+);
+const CastView = lazy(() =>
+  import('views/CastView' /* webpackChunkName: Cast View */),
+);
 
 const MovieDetailsPage = onClick => {
   const [loading, setLoading] = useState(false);
   const [movie, setMovie] = useState(null);
   const match = useRouteMatch();
-  const { movieId, url, path } = useParams();
+  const { movieId } = useParams();
   const history = useHistory();
   const location = useLocation();
 
@@ -43,58 +48,66 @@ const MovieDetailsPage = onClick => {
 
   return (
     <>
-      <button class="ui button" onClick={onBack}>
+      <button className="ui button" onClick={onBack}>
         Back
       </button>
       {loading && <CustomLoader />}
       {movie && (
-        <div className={style.InfoContainer}>
-          <div>
-            <img
-              src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-              alt="Movie for you"
-            />
-          </div>
-          <div>
-            <h2 className={style.Title}>{movie.original_title}</h2>
-            <p className={style.Text}>
-              User score : {movie.vote_average * 10}%
-            </p>
-            <h3>Overview:</h3>
-            <p className={style.Text}>{movie.overview}</p>
-            <h3>Genres:</h3>
-            <ul className={style.Text}>
-              {movie.genres.map(genre => (
-                <li key={genre.id}>{genre.name}</li>
-              ))}
-            </ul>
-            <nav className={style.Navigation}>
-              <NavLink
-                // to={`${match.path}/cast`}
-                //! Тут google url/path to=`${url}/cast`
-                className={style.link}
-                activeClassName={style.activeLink}
-              >
-                Cast
-              </NavLink>
+        <>
+          <div className={style.InfoContainer}>
+            <div>
+              <img
+                src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                alt="Movie for you"
+              />
+            </div>
+            <div>
+              <h2 className={style.Title}>{movie.original_title}</h2>
+              <p className={style.Text}>
+                User score : {movie.vote_average * 10}%
+              </p>
+              <h3>Overview:</h3>
+              <p className={style.Text}>{movie.overview}</p>
+              <h3>Genres:</h3>
+              <ul className={style.Text}>
+                {movie.genres.map(genre => (
+                  <li key={genre.id}>{genre.name}</li>
+                ))}
+              </ul>
+              <hr></hr>
+              <nav className={style.Navigation}>
+                <NavLink
+                  to={`${match.url}/cast`}
+                  className={style.link}
+                  activeClassName={style.activeLink}
+                >
+                  Cast
+                </NavLink>
 
-              <NavLink
-                // to={`${match.path}/review`}
-                className={style.link}
-                activeClassName={style.activeLink}
-              >
-                Review
-              </NavLink>
-            </nav>
+                <NavLink
+                  to={`${match.url}/review`}
+                  className={style.link}
+                  activeClassName={style.activeLink}
+                >
+                  Review
+                </NavLink>
+              </nav>
+            </div>
           </div>
-        </div>
+          <hr></hr>
+        </>
       )}
+      <Suspense fallback={CustomLoader}>
+        <Switch>
+          <Route path={`${match.path}/cast`}>
+            <CastView />
+          </Route>
 
-      <Switch>
-        <Route path={`${match.path}/cast`}>{movie && <CastView />}</Route>
-
-        <Route path={`${match.path}/reviews`}>{movie && <Review />}</Route>
-      </Switch>
+          <Route path={`${match.path}/review`}>
+            <Review />
+          </Route>
+        </Switch>
+      </Suspense>
     </>
   );
 };
